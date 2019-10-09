@@ -9,6 +9,27 @@
         background-size: cover;
         background-position: center;
         margin-bottom: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .add-cart {
+            padding: 15px;
+            background: white;
+            opacity: 0;
+            font-size: 25px;
+            font-weight: bold;
+            display: inline-block;
+            // visibility: hidden;
+            width: 100%;
+            text-align: center;
+        }
+    }
+    &:hover {
+        & .add-cart {
+            //  visibility: visible;
+            opacity: 0.7;
+            transition: opacity 1s linear;
+        }
     }
     .collection-footer {
         height: 5%;
