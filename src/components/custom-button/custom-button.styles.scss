@@ -12,9 +12,17 @@
     font-weight: bolder;
     border: none;
     cursor: pointer;
+    transition: 300ms ease-in-out;
     &:hover {
         background-color: white;
         color: black;
-        border: 1px solid;
+        //border: 1px solid;
+    }
+    &.isGoogle {
+        background-color: red;
+        margin-left: 15px;
+        &:hover {
+            background-color: aqua;
+        }
     }
 }
