@@ -1,51 +1,76 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.action';
+import { setCollection } from './redux/collection/collection.action';
+
 //Utils
-import { auth } from './firebase/firebase.utils';
+import { auth,createUserProfileDocument } from './firebase/firebase.utils';
+
 //Component
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shoppage.component';
 import SignInAndSignOut from './pages/sign-in-and-sign-up/sign-in-and-sign-out.component';
 
-class App extends React.Component {
-    constructor(){
-        super();
 
-        this.state={
-            currentUser:null
-        }
-    }
+import SHOP_DATA from './pages/shop/shop.data';
+
+class App extends React.Component {
+    
 
     unsubcribeFromAuth = null;
     componentDidMount(){
-        this.unsubcribeFromAuth = auth.onAuthStateChanged(user=>{
-            this.setState({currentUser:user});
+        const { setCurrentUser,setCollection } = this.props
+        this.unsubcribeFromAuth = auth.onAuthStateChanged(async userAuth=>{
+            if(userAuth){
+                const userRef = await createUserProfileDocument(userAuth);
+                userRef.onSnapshot(snapshot=>{
+                    setCurrentUser({
+                            id:snapshot.id,
+                            ...snapshot.data()
+                    })
+                })
+            }
+            setCurrentUser(userAuth);
         })
+
+        setCollection(SHOP_DATA);
+
     }
 
     componentWillUnmount(){
-        this.unsubcribeFromAuth();
+        //this.unsubcribeFromAuth();
     }
 
     render() {
+        const {currentUser,collection} = this.props;
         return (
             <div>
-              {this.state.currentUser?<h1>Hello: {this.state.currentUser.displayName}</h1>:''}
-
-              <Header currentUser={this.state.currentUser}></Header>
+                {currentUser?currentUser.displayName:''}
+              <Header></Header>
               <Switch>
                 <Route exact path="/" component={HomePage}></Route>
                 <Route path="/shop" component={ShopPage}></Route>
-                <Route path="/sign-in" component={SignInAndSignOut}></Route>
+                <Route path="/sign-in" render={()=>
+                    this.props.currentUser ? (<Redirect to="/"></Redirect>):(<SignInAndSignOut></SignInAndSignOut>)
+                }></Route>
               </Switch>
             </div>
           );
     }
 }
 
+const mapDispatchToProps = dispatch =>({
+    setCurrentUser: user =>dispatch(setCurrentUser(user)),
+    setCollection: collection => dispatch(setCollection(collection))
+})
 
+const mapStatetoProps = state =>({
+    currentUser : state.user.currentUser,
+    collection: state.collection.item
+})
 
-export default App;
+export default connect(mapStatetoProps,mapDispatchToProps)(App);
