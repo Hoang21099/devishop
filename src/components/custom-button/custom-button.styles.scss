@@ -13,9 +13,11 @@
     border: none;
     cursor: pointer;
     transition: 300ms ease-in-out;
+    display: flex;
+    justify-content: center;
     &:hover {
-        background-color: white;
-        color: black;
+        background-color: black;
+        color: white;
         //border: 1px solid;
     }
     &.isGoogle {
@@ -24,5 +26,9 @@
         &:hover {
             background-color: aqua;
         }
+    }
+    &.inverted {
+        background-color: black;
+        color: white;
     }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
 
 
 import './collection-preview.styles.scss';
@@ -12,8 +11,8 @@ const PreviewCollection=({title,items})=>(
         <div className="title"><h1>{title}</h1></div>
         <div className="preview">
             {
-                items.filter((item,index)=>index<4).map(({id,...otherItemProps})=>(
-                    <CollectionItem key={id} {...otherItemProps}></CollectionItem>
+                items.filter((item,index)=>index<4).map((item)=>(
+                    <CollectionItem key={item.id} item={item}></CollectionItem>
                 ))
             }
         </div>

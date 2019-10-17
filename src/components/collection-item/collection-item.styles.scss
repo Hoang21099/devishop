@@ -3,6 +3,7 @@
     flex-direction: column;
     height: 300px;
     width: 22%;
+    position: relative;
     .image {
         height: 95%;
         width: 100%;
@@ -12,23 +13,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        .add-cart {
-            padding: 15px;
-            background: white;
-            opacity: 0;
-            font-size: 25px;
-            font-weight: bold;
-            display: inline-block;
-            // visibility: hidden;
-            width: 100%;
-            text-align: center;
-        }
     }
     &:hover {
-        & .add-cart {
+        & .custom-button {
             //  visibility: visible;
-            opacity: 0.7;
-            transition: opacity 1s linear;
+            opacity: 1;
+            transition: opacity 0.5s linear;
         }
     }
     .collection-footer {
@@ -40,4 +30,10 @@
     }
     .name {}
     .price {}
+    .custom-button {
+        width: 80%;
+        opacity: 0.5;
+        position: absolute;
+        bottom: 20px;
+    }
 }

@@ -9,6 +9,9 @@
         }
     }
     .options {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
         .option {
             padding: 25px;
             cursor: pointer;

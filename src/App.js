@@ -11,6 +11,7 @@ import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 
 //Component
 import Header from './components/header/header.component';
+import Footer from './components/footer/footer.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shoppage.component';
 import SignInAndSignOut from './pages/sign-in-and-sign-up/sign-in-and-sign-out.component';
@@ -58,6 +59,7 @@ class App extends React.Component {
                     this.props.currentUser ? (<Redirect to="/"></Redirect>):(<SignInAndSignOut></SignInAndSignOut>)
                 }></Route>
               </Switch>
+                <Footer></Footer>
             </div>
           );
     }

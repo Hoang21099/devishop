@@ -1,6 +1,10 @@
 import React from 'react';
 import './header.styles.scss';
 
+
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropDown from '../cart-dropdown/cart-dropdown.component';
+
 //connect-redux
 import { connect } from 'react-redux';
 
@@ -10,7 +14,7 @@ import {Link} from 'react-router-dom';
 
 import {ReactComponent as Logo} from '../../assets/logo.svg';
 
-const Header = ({currentUser}) =>(
+const Header = ({currentUser,toogleCartHidden}) =>(
     <div className="header">
         <Link className="logo-container" to="/">
            <Logo className="logo"></Logo>
@@ -27,14 +31,20 @@ const Header = ({currentUser}) =>(
                 )
 
             }
+
+           <CartIcon> </CartIcon>
+
+            
         </div>
+        {toogleCartHidden?null:<CartDropDown></CartDropDown>}
     </div>
 )
 
 
 
 const mapStatetoProps = (state) => ({
-    currentUser : state.user.currentUser
+    currentUser : state.user.currentUser,
+    toogleCartHidden:state.cart.hidden
 })
 
 export default connect(mapStatetoProps)(Header);
