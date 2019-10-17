@@ -5,6 +5,9 @@ import './header.styles.scss';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropDown from '../cart-dropdown/cart-dropdown.component';
 
+//selector
+import {selectCartHidden} from '../../redux/cart/cart.selector';
+
 //connect-redux
 import { connect } from 'react-redux';
 
@@ -44,7 +47,7 @@ const Header = ({currentUser,toogleCartHidden}) =>(
 
 const mapStatetoProps = (state) => ({
     currentUser : state.user.currentUser,
-    toogleCartHidden:state.cart.hidden
+    toogleCartHidden:selectCartHidden(state)
 })
 
 export default connect(mapStatetoProps)(Header);

@@ -9,12 +9,17 @@ import { setCollection } from './redux/collection/collection.action';
 //Utils
 import { auth,createUserProfileDocument } from './firebase/firebase.utils';
 
+//selector
+import {selectCurrentUser} from './redux/user/user.selector';
+import {selectCollectionItems} from './redux/collection/collection.selector';
+
 //Component
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shoppage.component';
 import SignInAndSignOut from './pages/sign-in-and-sign-up/sign-in-and-sign-out.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 
 import SHOP_DATA from './pages/shop/shop.data';
@@ -58,6 +63,7 @@ class App extends React.Component {
                 <Route path="/sign-in" render={()=>
                     this.props.currentUser ? (<Redirect to="/"></Redirect>):(<SignInAndSignOut></SignInAndSignOut>)
                 }></Route>
+                <Route path="/checkout" component={CheckoutPage}></Route>
               </Switch>
                 <Footer></Footer>
             </div>
@@ -71,8 +77,8 @@ const mapDispatchToProps = dispatch =>({
 })
 
 const mapStatetoProps = state =>({
-    currentUser : state.user.currentUser,
-    collection: state.collection.item
+    currentUser : selectCurrentUser(state),
+    collection: selectCollectionItems(state)
 })
 
 export default connect(mapStatetoProps,mapDispatchToProps)(App);
